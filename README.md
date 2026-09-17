@@ -25,8 +25,6 @@ tools/optimize_images.py   regenerates assets/img/ from full-size source art
 .nojekyll                  tells GitHub Pages to skip Jekyll processing
 ```
 
-## Working on it
-
 Preview locally — use a real server, not `file://`, or the relative paths lie
 to you:
 
@@ -34,6 +32,24 @@ to you:
 python3 -m http.server 8000
 # then open http://localhost:8000
 ```
+
+## Publishing
+
+The live site is served from the **`gh-pages`** branch, which is what GitHub
+Pages is configured to publish. `main` is where the work happens, so a content
+change has to reach both:
+
+```sh
+git push origin main
+git checkout gh-pages && git merge --ff-only main && git push origin gh-pages
+git checkout main
+```
+
+`.github/workflows/pages.yml` is the alternative deploy route, currently set to
+manual trigger only. It needs Pages "Source" switched to GitHub Actions before
+it will work; until then `gh-pages` is the one that matters.
+
+## Working on it
 
 **The header and footer are duplicated in all four pages.** That's deliberate —
 it keeps the site dependency-free and working with JS off — but it means a

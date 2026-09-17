@@ -1,8 +1,10 @@
 name: Deploy to GitHub Pages
 
+# Manual-only for now. The site publishes from the gh-pages branch, which
+# GitHub serves directly. This workflow is the alternative route: it needs
+# Pages "Source" set to GitHub Actions (or a repo Actions token allowed to
+# create a Pages site), and can then be re-armed with a push trigger.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
