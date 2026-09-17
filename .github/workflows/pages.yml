@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it midway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+        with:
+          # Turns Pages on through the API using this workflow's own token,
+          # so the site does not depend on the Settings page being saved.
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          # Static site with no build step - the repo root is the site.
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
