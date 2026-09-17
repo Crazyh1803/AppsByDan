@@ -9,10 +9,11 @@ Live at: https://crazyh1803.github.io/AppsByDan/
 
 | Page | Contents |
 |---|---|
-| `index.html` | Hero, everything that's shipped, everything in progress, About Me |
+| `index.html` | Hero, everything that's shipped, everything in progress |
 | `apps.html` | True Shuffle, Manual Bridge, Pantry Logic |
 | `games.html` | Gaga Pit Showdown |
 | `printing.html` | 3D printing placeholder |
+| `about.html` | About Me, the tips model, the note on how the apps get made |
 
 Plain HTML, CSS, and a few lines of vanilla JS. No framework, no build step,
 no dependencies — GitHub Pages serves the repo root as-is.
@@ -51,9 +52,9 @@ it will work; until then `gh-pages` is the one that matters.
 
 ## Working on it
 
-**The header and footer are duplicated in all four pages.** That's deliberate —
+**The header and footer are duplicated in all five pages.** That's deliberate —
 it keeps the site dependency-free and working with JS off — but it means a
-change to the nav or the tip footer has to be made in all four files. Grep
+change to the nav or the tip footer has to be made in all five files. Grep
 before you edit.
 
 ## Adding a new app
