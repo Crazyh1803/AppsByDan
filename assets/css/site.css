@@ -371,32 +371,33 @@ main { flex: 1 0 auto; }
     display: grid;
     gap: 28px;
     align-items: start;
+    /* Cap the whole block, not the paragraphs: the grid then sets the reading
+       measure and nothing is left dangling to the right of the text. */
+    max-width: 940px;
 }
 @media (min-width: 760px) {
-    .about-layout { grid-template-columns: 240px 1fr; gap: 40px; }
+    /* minmax(0, 1fr) so a long unbroken string can't blow the column out. */
+    .about-layout { grid-template-columns: 260px minmax(0, 1fr); gap: 40px; }
 }
 
 .about-portrait {
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     overflow: hidden;
-    max-width: 240px;
+    max-width: 220px;
+    margin-inline: auto;
     background: var(--surface-2);
+}
+@media (min-width: 760px) {
+    /* Becomes a real column here, so it stops being centred. 260px against a
+       480px source keeps it ~1.8x for retina. */
+    .about-portrait { max-width: 260px; margin-inline: 0; }
 }
 .about-portrait img { width: 100%; height: auto; }
 
 .about-copy > * + * { margin-top: 16px; }
-.about-copy p { color: var(--text-muted); max-width: 64ch; }
+.about-copy p { color: var(--text-muted); }
 .about-copy strong { color: var(--text); font-weight: 600; }
-
-.about-quote {
-    border-left: 3px solid var(--accent);
-    background: var(--accent-soft);
-    border-radius: 0 var(--radius) var(--radius) 0;
-    padding: 16px 20px;
-}
-.about-quote { max-width: 64ch; }
-.about-quote p { color: var(--text); font-size: 1.02rem; max-width: none; }
 
 /* ── Footer ─────────────────────────────────────────────────────────────── */
 .site-footer {
