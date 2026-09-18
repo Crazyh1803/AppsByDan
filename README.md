@@ -65,14 +65,15 @@ border and the "Coming soon" badge.
 
 ## Adding artwork
 
-Drop the full-size image in the repo root, add a line to the `JOBS` list in
-`tools/optimize_images.py`, then:
+Put the full-size image anywhere in the repo, add a line to the `JOBS` list in
+`tools/optimize_images.py` (the source path is relative to the repo root), then:
 
 ```sh
 pip install Pillow
 python3 tools/optimize_images.py
 ```
 
-It writes a resized `.webp` and a `.jpg` fallback into `assets/img/`. Keep
-banners under ~350 KB — the whole point is that the page stays quick on a phone.
+It writes a resized `.webp` and a `.jpg` fallback into `assets/img/`, then the
+full-size source can be removed from the tree — git history keeps it, and the
+site only ever serves the derivatives. Keep banners under ~350 KB — the whole point is that the page stays quick on a phone.
 Reference them with a `<picture>` block so browsers pick the smaller file.

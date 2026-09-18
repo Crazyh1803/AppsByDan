@@ -19,7 +19,7 @@ OUT = ROOT / "assets" / "img"
 JOBS = [
     ("pantryLogic.png", "pantry-logic", 1600, "JPEG", 82),
     ("GagaBall.png", "gaga-pit-showdown", 1600, "JPEG", 74),
-    ("Headshot2.jpg", "dan-portrait", 480, "JPEG", 82),
+    ("assets/img/PixelHeadshot.jpg", "dan-portrait", 480, "JPEG", 82),
 ]
 
 
