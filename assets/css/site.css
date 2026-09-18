@@ -353,6 +353,15 @@ main { flex: 1 0 auto; }
     padding-top: 14px;
 }
 
+.card-body p.card-fineprint {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-dim);
+    margin-top: 12px;
+}
+.card-body p.card-fineprint a { color: var(--text-muted); }
+.card-body p.card-fineprint a:hover { color: var(--accent); }
+
 /* Placeholder tile for sections with no art yet (3D printing). */
 .card-placeholder {
     display: grid;
