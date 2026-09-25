@@ -18,7 +18,7 @@ OUT = ROOT / "assets" / "img"
 # source -> (output stem, target width, fallback format, quality)
 JOBS = [
     ("pantryLogic.png", "pantry-logic", 1600, "JPEG", 82),
-    ("GagaBall.png", "gaga-pit-showdown", 1600, "JPEG", 74),
+    ("assets/img/GagaPitTesters.webp", "gaga-pit-showdown", 1600, "JPEG", 74),
     ("assets/img/PixelHeadshot.jpg", "dan-portrait", 480, "JPEG", 82),
 ]
 
