@@ -353,14 +353,17 @@ main { flex: 1 0 auto; }
     padding-top: 14px;
 }
 
-.card-body p.card-fineprint {
+.card-body p.card-fineprint,
+.feature-body p.card-fineprint {
     font-size: 0.85rem;
     line-height: 1.5;
     color: var(--text-dim);
     margin-top: 12px;
 }
-.card-body p.card-fineprint a { color: var(--text-muted); }
-.card-body p.card-fineprint a:hover { color: var(--accent); }
+.card-body p.card-fineprint a,
+.feature-body p.card-fineprint a { color: var(--text-muted); }
+.card-body p.card-fineprint a:hover,
+.feature-body p.card-fineprint a:hover { color: var(--accent); }
 
 /* Placeholder tile for sections with no art yet (3D printing). */
 .card-placeholder {
@@ -374,6 +377,46 @@ main { flex: 1 0 auto; }
     color: var(--text-dim);
 }
 .card-placeholder svg { width: 56px; height: 56px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+
+/* ── Feature block ──────────────────────────────────────────────────────── */
+/* One thing given room, distinct from the card grid. The banner renders at its
+   native ratio here - no aspect-ratio, no object-fit - because it is a designed
+   image with the title laid into it, and the card's 16/9 frame crops its sides. */
+.feature {
+    max-width: 820px;
+    /* Left-aligned, not centred: every heading and card grid on the page hangs
+       off the container's left edge, and centring this broke that line. */
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.feature-media img { width: 100%; height: auto; display: block; }
+
+.feature-body { padding: 24px 28px 28px; }
+.feature-body > * + * { margin-top: 12px; }
+.feature-body h3 { font-size: 1.45rem; }
+.feature-body p { color: var(--text-muted); }
+.feature-body .card-tagline { color: var(--accent); font-size: 0.95rem; font-weight: 600; }
+
+.feature-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+
+/* The Android test is still on offer, but must not compete with Play. */
+.feature-sub {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+.feature-sub-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.feature-sub .card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+@media (max-width: 480px) {
+    .feature-body { padding: 20px 20px 24px; }
+}
 
 /* ── About ──────────────────────────────────────────────────────────────── */
 .about-layout {
