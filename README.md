@@ -73,6 +73,11 @@ pip install Pillow
 python3 tools/optimize_images.py
 ```
 
+**Replacing existing artwork? Give the output a new name** (`-v2`, `-v3`) and
+update the `<picture>` blocks that reference it. Overwriting a file in place
+leaves everyone who already visited looking at the old picture out of their
+browser cache, with no way to know they should refresh.
+
 It writes a resized `.webp` and a `.jpg` fallback into `assets/img/`, then the
 full-size source can be removed from the tree — git history keeps it, and the
 site only ever serves the derivatives. Keep banners under ~350 KB — the whole point is that the page stays quick on a phone.
