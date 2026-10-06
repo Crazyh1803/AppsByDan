@@ -23,6 +23,7 @@ assets/css/site.css        every style on the site; tokens live at the top
 assets/js/site.js          mobile nav toggle + footer year, nothing else
 assets/img/                web-sized artwork (.webp with a .jpg fallback)
 tools/optimize_images.py   regenerates assets/img/ from full-size source art
+tools/make_app_banners.py  rebuilds the True Shuffle and Manual Bridge banners
 .nojekyll                  tells GitHub Pages to skip Jekyll processing
 ```
 
@@ -62,6 +63,11 @@ before you edit.
 Copy an `<article class="card card-live">` block from `apps.html` and fill it
 in. Cards that aren't out yet use `card-coming` instead, which gets the dashed
 border and the "Coming soon" badge.
+
+Two of the card banners are not hand-made art: True Shuffle's is composed from
+that app's own logo, and Manual Bridge's is its repo banner cropped to 16/9.
+`tools/make_app_banners.py` rebuilds both full-size, then
+`tools/optimize_images.py` turns them into the files the pages load.
 
 ## Adding artwork
 
