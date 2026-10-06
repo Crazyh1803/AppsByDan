@@ -264,7 +264,6 @@ main { flex: 1 0 auto; }
     gap: 22px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
-.grid-wide { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
 
 /* A section with a single card shouldn't stretch it across the full width -
    the banner art balloons and the card stops reading as a card. */
