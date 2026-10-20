@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://crazyh1803.github.io/AppsByDan/sitemap.xml
