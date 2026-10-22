@@ -46,6 +46,16 @@ The tag pins `https://gc.zgo.at/count.js`; GoatCounter's own snippet uses a
 protocol-relative `//gc.zgo.at`, which is a leftover from the mixed http/https
 era and has no benefit on an https-only site.
 
+Outbound clicks are recorded as events via `data-goatcounter-click` on the app,
+store, tester-funnel and tip links - GoatCounter only sees pageviews on pages
+carrying its tag, so a click through to another site is otherwise invisible.
+Event names are per destination (`out-manual-bridge-web`, `out-tip-button`),
+never per page, which is what keeps the shared footer byte-identical across all
+six pages. GitHub and Instagram links are deliberately untagged.
+
+Click events are best-effort: they fire as the browser is navigating away, so
+expect to lose a few.
+
 ## Publishing
 
 The live site is **https://appsbydan.com**, served from the **`gh-pages`**
