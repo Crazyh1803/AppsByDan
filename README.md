@@ -35,6 +35,17 @@ python3 -m http.server 8000
 # then open http://localhost:8000
 ```
 
+## Analytics
+
+GoatCounter, loaded from a tag before `</body>` on all six pages. It is
+cookieless and collects no personal data, so the site needs no cookie banner -
+if that ever changes, the banner question changes with it. Stats are at
+https://appsbydan.goatcounter.com.
+
+The tag pins `https://gc.zgo.at/count.js`; GoatCounter's own snippet uses a
+protocol-relative `//gc.zgo.at`, which is a leftover from the mixed http/https
+era and has no benefit on an https-only site.
+
 ## Publishing
 
 The live site is **https://appsbydan.com**, served from the **`gh-pages`**
