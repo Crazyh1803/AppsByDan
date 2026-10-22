@@ -3,7 +3,7 @@
 Source for the **Apps by Dan** homepage — a static site that collects the apps,
 games, and 3D printing designs I build and give away.
 
-Live at: https://crazyh1803.github.io/AppsByDan/
+Live at: https://appsbydan.com/
 
 ## What's here
 
@@ -37,8 +37,10 @@ python3 -m http.server 8000
 
 ## Publishing
 
-The live site is served from the **`gh-pages`** branch, which is what GitHub
-Pages is configured to publish. `main` is where the work happens, so a content
+The live site is **https://appsbydan.com**, served from the **`gh-pages`**
+branch. The `CNAME` file at the repo root is what points the domain at it, so
+it must stay on whichever branch Pages publishes — deleting it reverts the site
+to the github.io URL. `main` is where the work happens, so a content
 change has to reach both:
 
 ```sh
