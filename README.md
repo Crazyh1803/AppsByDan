@@ -5,6 +5,10 @@ games, and 3D printing designs I build and give away.
 
 Live at: https://appsbydan.com/
 
+Maintaining this? Read **[AGENTS.md](AGENTS.md)** first — it covers how the
+pieces connect, and the invariants that break silently if you get them wrong.
+This file is the day-to-day reference.
+
 ## What's here
 
 | Page | Contents |
