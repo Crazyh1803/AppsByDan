@@ -120,7 +120,10 @@ Reference them with a `<picture>` block so browsers pick the smaller file.
 
 The playable game at `/hedge-and-harvest/` is a static copy of the five runtime
 files from [Crazyh1803/HedgeandHarvest](https://github.com/Crazyh1803/HedgeandHarvest),
-commit `6b5dea5cf6063693e75a80d7d9a1d673418588a4`. To update it, copy `index.html`,
-`styles.css`, `game.js`, `audio.js`, and `favicon.svg` from a tested source revision
-into `hedge-and-harvest/`, then update this revision and publish both branches.
+commit `6b5dea5cf6063693e75a80d7d9a1d673418588a4`. To update it from a tested source
+checkout, run `python3 tools/sync_hedge_and_harvest.py /absolute/path/to/HedgeandHarvest`,
+then verify and publish both branches. The helper copies the five runtime files,
+updates this revision, and adds content hashes to asset URLs in the hosted HTML.
+This makes browsers fetch matching JavaScript and CSS after an update instead
+of combining a new page with older cached code.
 The listing artwork is a screenshot of actual gameplay.
