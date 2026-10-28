@@ -56,8 +56,27 @@
     </div></section>
     <section class="section"><div class="wrap">
       <div class="section-head"><h2>The player gallery</h2></div>
-      <div id="player-gallery" class="grid"></div>
-      <div id="gallery-empty" class="harvest-empty"><span aria-hidden="true">🌱</span><h3>The first crop is still growing.</h3><p>No player creations have been published yet. Yours could be one of the first.</p><p>Only reviewed, approved submissions will appear here.</p></div>
+      <div id="player-gallery" class="grid">
+        <!-- BEGIN APPROVED CREATIONS -->
+        <article class="card">
+          <img src="assets/img/harvest-player-golden-ear-of-corn.webp" alt="A golden ear of corn with its husk, drawn using cornfield paths in an autumn field." loading="lazy" decoding="async">
+          <div class="card-body">
+            <h3>Golden Ear of Corn</h3>
+            <p>Grown by Community player</p>
+            <p>An autumn cornfield creation celebrating the crop itself.</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="assets/img/harvest-player-harbor-portrait.webp" alt="A detailed cornfield portrait of a bearded person wearing glasses, carved into an autumn field." loading="lazy" decoding="async">
+          <div class="card-body">
+            <h3>Harbor Portrait</h3>
+            <p>Grown by Community player</p>
+            <p>A detailed portrait built from corn and carefully carved paths.</p>
+          </div>
+        </article>
+        <!-- END APPROVED CREATIONS -->
+      </div>
+      <div id="gallery-empty" class="harvest-empty" hidden><span aria-hidden="true">🌱</span><h3>The first crop is still growing.</h3><p>No player creations have been published yet. Yours could be one of the first.</p><p>Only reviewed, approved submissions will appear here.</p></div>
     </div></section>
     <section class="section" id="submit"><div class="wrap harvest-submission">
       <p class="harvest-eyebrow">From your field to the gallery</p><h2>Share your creation</h2>
@@ -73,7 +92,7 @@
         <a id="creation-form-link" aria-disabled="true" tabindex="-1" class="btn btn-primary" target="_blank" rel="noopener" hidden>Upload your creation</a>
         <p class="card-fineprint">Uploads use Google Forms and require a Google account. Your image stays in Dan&rsquo;s private Google Drive during review. Nothing is posted automatically.</p>
       </div>
-      <noscript><p>Enable JavaScript to load the submission link and player gallery.</p></noscript>
+      <noscript><p>Enable JavaScript to load the submission link. Published creations are visible above.</p></noscript>
 
     </div></section>
   </main>
@@ -105,7 +124,7 @@
   </footer>
 
   <script src="assets/js/site.js"></script>
-  <script src="assets/js/harvest-gallery.js" defer></script>
+  <script src="assets/js/harvest-gallery.js?v=2" defer></script>
   <!-- GoatCounter: cookieless, no personal data collected. -->
   <script data-goatcounter="https://appsbydan.goatcounter.com/count"
           async src="https://gc.zgo.at/count.js"></script>

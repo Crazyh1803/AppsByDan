@@ -132,3 +132,9 @@ jurisdictions before relying on liability wording. Preserve each accepted
 version's text when updating it; keep the matching version and date in the
 required Form question and website checkbox. Apply a new version to future
 submissions, not retroactively to earlier licenses.
+
+After updating the public gallery JSON, run `python3 tools/sync_harvest_gallery.py`
+before publishing. This embeds the same approved cards into the HTML, so images
+remain visible without JavaScript or if the data request fails. The script also
+updates the empty-gallery state. The browser refreshes the data without caching;
+when changing the gallery JavaScript, bump its `?v=` URL in the gallery HTML.

@@ -3,7 +3,7 @@
   const grid = document.querySelector('#player-gallery');
   const empty = document.querySelector('#gallery-empty');
   try {
-    const response = await fetch('assets/data/harvest-gallery.json');
+    const response = await fetch('assets/data/harvest-gallery.json?refresh=' + Date.now(), { cache: 'no-store' });
     if (!response.ok) throw new Error('Gallery unavailable');
     const data = await response.json();
     if (typeof data.submissionFormUrl === 'string' && data.submissionFormUrl) {
@@ -28,6 +28,7 @@
         document.querySelector('#upload-unavailable').hidden = true;
       }
     }
+    const cards = document.createDocumentFragment();
     for (const entry of data.creations || []) {
       // Public images live with the site, never in a public submission folder.
       if (!/^assets\/img\/[a-zA-Z0-9_-]+\.(webp|jpg|jpeg|png)$/.test(entry.image)) continue;
@@ -37,8 +38,9 @@
       const title = document.createElement('h3'); title.textContent = entry.title;
       const credit = document.createElement('p'); credit.textContent = 'Grown by ' + entry.credit;
       const description = document.createElement('p'); description.textContent = entry.description || '';
-      body.append(title, credit, description); article.append(image, body); grid.append(article);
+      body.append(title, credit, description); article.append(image, body); cards.append(article);
     }
+    grid.replaceChildren(cards);
     empty.hidden = grid.children.length > 0;
   } catch {
     empty.querySelector('h3').textContent = 'The gallery is taking a breather.';
