@@ -127,3 +127,15 @@ updates this revision, and adds content hashes to asset URLs in the hosted HTML.
 This makes browsers fetch matching JavaScript and CSS after an update instead
 of combining a new page with older cached code.
 The listing artwork is a screenshot of actual gameplay.
+
+### Game landing page and player gallery
+
+`hedge-and-harvest.html` is the game landing page; home and games listings lead
+there. The existing `/hedge-and-harvest/` runtime and browser saves are preserved.
+`hedge-and-harvest-gallery.html` displays approved community images from
+`assets/data/harvest-gallery.json`. The same file holds `submissionFormUrl`, the
+published Google Form responder URL. Until it is set, the page clearly says
+submissions are not open. No fabricated player submissions are included.
+
+See [the Drive gallery setup](docs/harvest-gallery-drive.md) for the private
+folders, Google Form setup, and review/publication workflow.

@@ -354,3 +354,17 @@ Each of these cost time at least once.
 - **`Enforce HTTPS`** in Settings → Pages, once GitHub issues the certificate.
 - **Play listings and Instagram bio** should point at `appsbydan.com` rather
   than the old github.io URL.
+
+
+## Hedge and Harvest gallery addition
+
+The game home is `hedge-and-harvest.html`; the player gallery is
+`hedge-and-harvest-gallery.html`. Preserve the playable `/hedge-and-harvest/`
+URL and runtime files to preserve browser saves. Submissions use a Google Form
+with file uploads to the owner's private Drive. See `docs/harvest-gallery-drive.md`.
+The public site remains entirely static and dependency-free. Configure the
+responder form URL and approved gallery records in `assets/data/harvest-gallery.json`.
+Never put Drive submission IDs, response sheets, private image links, or rejected
+content into the public JSON/repo. Use only reviewed, approved image derivatives
+stored under `assets/img/`. Drive folders remain private, including the approved
+folder. Agent review is on demand; no recurring curation is configured.
