@@ -1,4 +1,19 @@
 {
   "submissionFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLScMtKvG53zjeeybPHppwzuwZ8yK1US6eFXBIeAvv0PL52n-2Q/viewform",
-  "creations": []
+  "creations": [
+    {
+      "title": "Golden Ear of Corn",
+      "credit": "Community player",
+      "description": "An autumn cornfield creation celebrating the crop itself.",
+      "image": "assets/img/harvest-player-golden-ear-of-corn.webp",
+      "alt": "A golden ear of corn with its husk, drawn using cornfield paths in an autumn field."
+    },
+    {
+      "title": "Harbor Portrait",
+      "credit": "Community player",
+      "description": "A detailed portrait built from corn and carefully carved paths.",
+      "image": "assets/img/harvest-player-harbor-portrait.webp",
+      "alt": "A detailed cornfield portrait of a bearded person wearing glasses, carved into an autumn field."
+    }
+  ]
 }
