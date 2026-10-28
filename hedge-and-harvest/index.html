@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Hedge and Harvest: drive the tractor through the corn to make corn art, or turn it into a maze and run your animal to the flag.">
+<meta name="theme-color" content="#5a7a58">
+<title>Hedge and Harvest</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-season="summer" data-mode="carve" data-purpose="art">
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <h1>Hedge <em>and Harvest</em></h1>
+      <p class="tagline">Carve a path through the corn. Make art, or make a maze.</p>
+    </div>
+    <div class="top-actions">
+      <button id="btn-music" class="btn ghost tog" type="button" aria-pressed="false">Music: Off</button>
+      <button id="btn-sfx" class="btn ghost tog" type="button" aria-pressed="false">Sounds: Off</button>
+      <button id="btn-help" class="btn ghost" type="button">How to play</button>
+      <a id="about-developer" class="btn ghost" href="https://appsbydan.com" target="_blank" rel="noopener noreferrer">About the developer</a>
+    </div>
+    <div id="now-playing-bar" class="now-bar" role="group" aria-label="Music player">
+      <button id="music-prev" class="btn ghost now-skip" type="button" aria-label="Previous song">&#9664;&#9664;</button>
+      <select id="music-track" class="text now-select" aria-label="Song"></select>
+      <button id="music-next" class="btn ghost now-skip" type="button" aria-label="Next song">&#9654;&#9654;</button>
+      <span id="now-playing" class="now-status" role="status" aria-live="polite"></span>
+    </div>
+    <p id="audio-note" class="audio-note" role="status" hidden>Sound isn't available in this browser.</p>
+  </header>
+
+  <main class="layout">
+    <div class="stage-col">
+    <section class="stage" aria-label="Cornfield play area">
+      <div class="field-toolbar" id="field-toolbar" role="group" aria-label="Field tools">
+        <div class="hud" aria-label="Game status">
+          <div class="stat maze-only"><span class="label">Time</span><b id="hud-time">0:00</b></div>
+          <div class="stat maze-only"><span class="label">Steps</span><b id="hud-moves">0</b></div>
+          <div class="stat"><span class="label">Corn left</span><b id="hud-corn">0</b></div>
+          <div class="stat route maze-only" data-ok="0"><span class="label">Route</span><b id="hud-route">Place gates</b></div>
+        </div>
+        <button id="btn-maze" class="btn tog" type="button" aria-pressed="false">Make it a maze</button>
+        <details id="maze-menu" class="menu maze-only">
+          <summary id="maze-summary" class="btn">Maze options</summary>
+          <div class="menu-panel menu-left" id="maze-panel">
+            <div class="mode-switch" id="mode-group" role="group" aria-label="Mode">
+              <button id="mode-carve" data-mode="carve" type="button" aria-pressed="true">Carve</button>
+              <button id="mode-run" data-mode="run" type="button" aria-pressed="false" disabled>Run</button>
+            </div>
+            <p class="gate-status" id="gate-status" role="status">Start not placed. Exit not placed. Place both to run.</p>
+            <button id="btn-place-start" class="btn" type="button" aria-pressed="false">Place start</button>
+            <button id="btn-place-exit" class="btn" type="button" aria-pressed="false">Place exit</button>
+            <button id="btn-generate" class="btn" type="button">Grow new maze</button>
+            <button id="btn-hint" class="btn" type="button">Hint</button>
+            <button id="btn-reset" class="btn" type="button">Reset runner</button>
+          </div>
+        </details>
+        <details id="share-menu" class="menu">
+          <summary id="share-summary" class="btn">Share / Export</summary>
+          <div class="menu-panel menu-right">
+            <button id="btn-export-json" class="btn" type="button">Export JSON</button>
+            <button id="btn-import" class="btn" type="button">Import JSON</button>
+            <button id="btn-png" class="btn" type="button">Save picture (PNG)</button>
+          </div>
+        </details>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="field" tabindex="0" role="application"
+          aria-label="Cornfield art field. Arrow keys or WASD drive the tractor and carve corn. U undoes."></canvas>
+
+        <div class="win" id="win" role="dialog" aria-live="polite" aria-labelledby="win-title" hidden>
+          <h2 id="win-title">Harvest home!</h2>
+          <p id="win-text"></p>
+          <dl class="win-stats">
+            <div><dt>Time</dt><dd id="win-time">0:00</dd></div>
+            <div><dt>Steps</dt><dd id="win-moves">0</dd></div>
+            <div><dt>Best</dt><dd id="win-best">-</dd></div>
+          </dl>
+          <div class="win-actions">
+            <button id="win-again" class="btn primary" type="button">Run it again</button>
+            <button id="win-new" class="btn" type="button">Grow a new maze</button>
+            <button id="win-share" class="btn ghost" type="button">Share</button>
+          </div>
+          <p class="support">Enjoying the game? You can <a class="support-link" data-placement="completed" href="https://buymeacoffee.com/AppsbyDan" target="_blank" rel="noopener noreferrer">buy Dan a coffee</a>.</p>
+        </div>
+
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="dpad" id="dpad" aria-label="Touch controls">
+        <button class="dpad-btn up" data-dx="0" data-dy="-1" type="button" aria-label="Up">&#9650;</button>
+        <button class="dpad-btn left" data-dx="-1" data-dy="0" type="button" aria-label="Left">&#9664;</button>
+        <button class="dpad-btn right" data-dx="1" data-dy="0" type="button" aria-label="Right">&#9654;</button>
+        <button class="dpad-btn down" data-dx="0" data-dy="1" type="button" aria-label="Down">&#9660;</button>
+        <button id="btn-undo2" class="btn dpad-undo" type="button">Undo</button>
+      </div>
+    </section>
+    <div id="field-support">
+      <p class="note support support-main">Enjoying the game? You can <a class="support-link" data-placement="main" href="https://buymeacoffee.com/AppsbyDan" target="_blank" rel="noopener noreferrer">buy Dan a coffee</a>.</p>
+      <p class="note support" id="loaded-support" hidden>Enjoying the game? You can <a class="support-link" data-placement="loaded" href="https://buymeacoffee.com/AppsbyDan" target="_blank" rel="noopener noreferrer">buy Dan a coffee</a>.</p>
+    </div>
+    </div>
+
+    <aside class="panel" aria-label="Field settings">
+      <section class="card minimap-card" aria-labelledby="minimap-title">
+        <h2 id="minimap-title">Field map</h2>
+        <canvas id="minimap" role="img" aria-label="Map of the whole field showing the visible area and the active character"></canvas>
+        <p class="note" id="minimap-note">Showing the whole field</p>
+      </section>
+
+      <div class="tabs" id="sidebar-tabs" role="tablist" aria-label="Sidebar sections">
+        <button type="button" role="tab" id="tab-play" aria-controls="panel-play" aria-selected="true" tabindex="0">Play</button>
+        <button type="button" role="tab" id="tab-settings" aria-controls="panel-settings" aria-selected="false" tabindex="-1">Settings</button>
+      </div>
+
+      <div class="tabpanel" id="panel-play" role="tabpanel" aria-labelledby="tab-play">
+      <section class="card" id="resume-card" aria-labelledby="resume-title" hidden>
+        <h2 id="resume-title">Saved field</h2>
+        <button id="btn-resume" class="btn wide" type="button">Continue saved field</button>
+        <p class="note">Each visit starts with a fresh planted field. Starting a new carving keeps only your last field.</p>
+      </section>
+
+      <section class="card">
+        <label class="label" for="creation-name">Name your field</label>
+        <input id="creation-name" class="text" type="text" maxlength="40" autocomplete="off" spellcheck="false">
+      </section>
+
+      <section class="card">
+        <h2>Field tools</h2>
+        <div class="grid2">
+          <button id="btn-replant" class="btn" type="button">Replant field</button>
+          <button id="btn-undo" class="btn" type="button">Undo</button>
+          <button id="btn-view" class="btn wide" type="button" aria-pressed="false">View: Whole field</button>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Save status">
+        <p class="note" id="save-status">Autosave on</p>
+      </section>
+      </div>
+
+      <div class="tabpanel" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
+      <section class="card">
+        <h2>Field size</h2>
+        <div class="seg" id="size-group" role="group" aria-label="Field size">
+          <button type="button" data-size="small" aria-pressed="false"><span>Cozy plot</span><small>15 &times; 11</small></button>
+          <button type="button" data-size="medium" aria-pressed="true"><span>Family farm</span><small>25 &times; 17</small></button>
+          <button type="button" data-size="large" aria-pressed="false"><span>Great field</span><small>35 &times; 23</small></button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Season</h2>
+        <div class="seasons" id="season-group" role="group" aria-label="Season">
+          <button type="button" data-season="spring" aria-pressed="false"><i class="dot spring"></i>Spring</button>
+          <button type="button" data-season="summer" aria-pressed="true"><i class="dot summer"></i>Summer</button>
+          <button type="button" data-season="autumn" aria-pressed="false"><i class="dot autumn"></i>Autumn</button>
+          <button type="button" data-season="winter" aria-pressed="false"><i class="dot winter"></i>Winter</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Your runner</h2>
+        <div class="animals" id="animal-group" role="group" aria-label="Runner animal">
+          <button type="button" data-animal="dog" aria-pressed="true" aria-label="Dog"><canvas aria-hidden="true"></canvas><span>Dog</span></button>
+          <button type="button" data-animal="cat" aria-pressed="false" aria-label="Cat"><canvas aria-hidden="true"></canvas><span>Cat</span></button>
+          <button type="button" data-animal="cow" aria-pressed="false" aria-label="Cow"><canvas aria-hidden="true"></canvas><span>Cow</span></button>
+          <button type="button" data-animal="horse" aria-pressed="false" aria-label="Horse"><canvas aria-hidden="true"></canvas><span>Horse</span></button>
+          <button type="button" data-animal="pig" aria-pressed="false" aria-label="Pig"><canvas aria-hidden="true"></canvas><span>Pig</span></button>
+          <button type="button" data-animal="chicken" aria-pressed="false" aria-label="Chicken"><canvas aria-hidden="true"></canvas><span>Chicken</span></button>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="motion-title">
+        <h2 id="motion-title">Motion</h2>
+        <label class="label" for="motion-mode">Running and swaying corn</label>
+        <select id="motion-mode" class="text">
+          <option value="device">Follow my device</option>
+          <option value="full">Full motion</option>
+          <option value="reduced">Reduced motion</option>
+        </select>
+        <p class="note" id="motion-note" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card" aria-labelledby="music-title">
+        <h2 id="music-title">Music</h2>
+        <label class="check" for="music-rotate"><input id="music-rotate" type="checkbox" checked> Auto rotate songs (about every minute)</label>
+        <p class="note">Pick songs and skip with the player at the top of the page.</p>
+      </section>
+
+      <p class="note support support-settings">Enjoying the game? You can <a class="support-link" data-placement="settings" href="https://buymeacoffee.com/AppsbyDan" target="_blank" rel="noopener noreferrer">buy Dan a coffee</a>.</p>
+      </div>
+    </aside>
+  </main>
+</div>
+
+<div class="modal" id="modal-help" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <h2 id="help-title">How to play Hedge and Harvest</h2>
+    <ol class="help">
+      <li><b>Carve.</b> The field starts fully planted. Drive the tractor with the arrow keys / WASD, the on-screen pad, or by dragging from the tractor to cut paths and make corn art.</li>
+      <li><b>Maze (optional).</b> Turn on <b>Maze</b> to reveal <b>Place start</b> and <b>Place exit</b>. Choose a button, then tap or click any spot in the field. Nothing is generated for you unless you press <b>Grow new maze</b>, and your art is kept when you switch Maze on or off.</li>
+      <li><b>Run.</b> Once both gates are placed, switch to Run (or press M) and guide your animal along the cleared path to the coral flag. Corn blocks the way. The Route light turns green when a way through exists.</li>
+      <li><b>U</b> or Ctrl+Z undoes (including gate placement). In a maze, <b>H</b> shows a hint and <b>R</b> resets the runner.</li>
+      <li>The whole field is shown by default; use <b>View</b> for an optional close-up. Each visit starts with a fresh planted field; your last carving is kept on this device and can be reopened with Continue. Export JSON or a PNG to share what you build.</li>
+    </ol>
+    <div class="modal-actions"><button class="btn primary" type="button" data-close data-autofocus>Let's go</button></div>
+  </div>
+</div>
+
+<div class="modal" id="modal-confirm" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-body">
+    <h2 id="confirm-title"></h2>
+    <p id="confirm-body"></p>
+    <div class="modal-actions">
+      <button class="btn" type="button" data-close data-autofocus>Keep my field</button>
+      <button id="confirm-ok" class="btn danger" type="button"></button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-share" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="share-title">
+    <h2 id="share-title">Export your field</h2>
+    <p id="share-note" class="note"></p>
+    <label class="label" for="share-text">Creation data (JSON)</label>
+    <textarea id="share-text" class="text mono" rows="8" readonly spellcheck="false"></textarea>
+    <p class="note support">Enjoying the game? You can <a class="support-link" data-placement="shared" href="https://buymeacoffee.com/AppsbyDan" target="_blank" rel="noopener noreferrer">buy Dan a coffee</a>.</p>
+    <div class="modal-actions">
+      <button class="btn" type="button" data-close>Close</button>
+      <button id="share-copy" class="btn" type="button">Copy</button>
+      <button id="share-download" class="btn primary" type="button" data-autofocus>Download .json</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-import" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="import-title">
+    <h2 id="import-title">Import a field</h2>
+    <p class="note">Paste creation JSON or choose a file. Only field data is read; nothing is ever run.</p>
+    <label class="label" for="import-file">Choose a .json file</label>
+    <input id="import-file" class="text" type="file" accept=".json,application/json,text/plain">
+    <label class="label" for="import-text">Or paste it here</label>
+    <textarea id="import-text" class="text mono" rows="7" spellcheck="false" data-autofocus></textarea>
+    <p id="import-error" class="error" role="alert"></p>
+    <div class="modal-actions">
+      <button class="btn" type="button" data-close>Cancel</button>
+      <button id="import-load" class="btn primary" type="button">Load field</button>
+    </div>
+  </div>
+</div>
+
+<script src="audio.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

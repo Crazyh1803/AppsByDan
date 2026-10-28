@@ -17,6 +17,7 @@ OUT = ROOT / "assets" / "img"
 
 # source -> (output stem, target width, fallback format, quality)
 JOBS = [
+    ("assets/img/hedge-and-harvest-source.png", "hedge-and-harvest", 1200, "JPEG", 82),
     ("assets/img/TrueShuffleBanner.png", "true-shuffle", 1600, "JPEG", 86),
     ("assets/img/ManualBridgeBanner.png", "manual-bridge", 1600, "JPEG", 82),
     ("assets/img/PantryLogicLive.png", "pantry-logic-v2", 1600, "JPEG", 82),

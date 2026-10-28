@@ -15,7 +15,7 @@ This file is the day-to-day reference.
 |---|---|
 | `index.html` | Hero, everything that's shipped, everything in progress |
 | `apps.html` | True Shuffle, Manual Bridge, Pantry Logic |
-| `games.html` | Gaga Pit Showdown |
+| `games.html` | Hedge and Harvest, Gaga Pit Showdown |
 | `printing.html` | 3D printing placeholder |
 | `about.html` | About Me, the tips model, the note on how the apps get made |
 
@@ -115,3 +115,12 @@ It writes a resized `.webp` and a `.jpg` fallback into `assets/img/`, then the
 full-size source can be removed from the tree — git history keeps it, and the
 site only ever serves the derivatives. Keep banners under ~350 KB — the whole point is that the page stays quick on a phone.
 Reference them with a `<picture>` block so browsers pick the smaller file.
+
+## Hedge and Harvest
+
+The playable game at `/hedge-and-harvest/` is a static copy of the five runtime
+files from [Crazyh1803/HedgeandHarvest](https://github.com/Crazyh1803/HedgeandHarvest),
+commit `ff8b3adb4f52aced937332cabf912193463985e0`. To update it, copy `index.html`,
+`styles.css`, `game.js`, `audio.js`, and `favicon.svg` from a tested source revision
+into `hedge-and-harvest/`, then update this revision and publish both branches.
+The listing artwork is a screenshot of actual gameplay.

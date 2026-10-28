@@ -391,6 +391,7 @@ main { flex: 1 0 auto; }
     border-radius: var(--radius-lg);
     overflow: hidden;
 }
+.feature + .feature { margin-top: 28px; }
 .feature-media img { width: 100%; height: auto; display: block; }
 
 .feature-body { padding: 24px 28px 28px; }
