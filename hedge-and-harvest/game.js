@@ -20,7 +20,10 @@
   var SIZES = {
     small: { w: 15, h: 11, label: 'Cozy plot' },
     medium: { w: 25, h: 17, label: 'Family farm' },
-    large: { w: 35, h: 23, label: 'Great field' }
+    large: { w: 35, h: 23, label: 'Great field' },
+    expansive: { w: 69, h: 35, label: 'Wide acres' },
+    grand: { w: 105, h: 69, label: 'Grand estate' },
+    vast: { w: 207, h: 105, label: 'Harvest country' }
   };
   var SEASONS = ['spring', 'summer', 'autumn', 'winter'];
   var ANIMALS = ['dog', 'cat', 'cow', 'horse', 'pig', 'chicken'];
@@ -622,13 +625,16 @@
     return out;
   }
 
+  var LAYER_MAX_PIXELS = 16000000; // ~64 MB of pixel data per field layer
   /** Static diorama layer: tray, soil, paths and, when `withCorn`, the baked corn. Returns {canvas, w, h, withCorn} in css px.
    *  Without corn the stalks are drawn live from the sprite atlas (see drawCorn) so they can sway at their roots. */
   function buildLayer(s, season, t, dpr, withCorn) {
     var pal = PAL[season], LW = (s.w + 2 * ORG) * t, LH = (s.h + ORGY + ORG + 0.4) * t;
+    // Bound the backing store: lower the layer's DPR (never its css size) so it stays within LAYER_MAX_PIXELS.
+    dpr = Math.min(dpr, Math.sqrt(LAYER_MAX_PIXELS / (LW * LH)));
     var cv = document.createElement('canvas');
-    cv.width = Math.ceil(LW * dpr); cv.height = Math.ceil(LH * dpr);
-    var g = cv.getContext('2d'); g.scale(dpr, dpr);
+    cv.width = Math.max(1, Math.floor(LW * dpr)); cv.height = Math.max(1, Math.floor(LH * dpr));
+    var g = cv.getContext('2d'); g.scale(cv.width / LW, cv.height / LH);
     var x0 = 0.3 * t, y0 = (ORGY - ORG + 0.3) * t, pw = LW - 0.6 * t, ph = (s.h + 2 * ORG - 0.6) * t, depth = 0.4 * t, rad = 0.5 * t;
     // tray: side + drop shadow, then top
     g.save(); g.shadowColor = 'rgba(70,45,20,0.35)'; g.shadowBlur = 0.45 * t; g.shadowOffsetY = 0.22 * t;
@@ -1326,8 +1332,15 @@
       if (!sized && !force) return;
       ui.cw = cw; ui.ch = ch; ui.dpr = dpr;
       if (sized) { canvas.width = Math.round(cw * dpr); canvas.height = Math.round(ch * dpr); }
-      var fit = Math.max(4, Math.floor(Math.min(cw / (S.w + 2 * ORG), ch / (S.h + ORGY + ORG + 0.4))));
-      var t = ui.view === 'close' ? Math.max(38, Math.round(fit * 1.7)) : fit;
+      // Whole-field tile: whole pixels while they are 4+, otherwise eighths of a pixel so the field always fits.
+      var fitF = Math.min(cw / (S.w + 2 * ORG), ch / (S.h + ORGY + ORG + 0.4));
+      var fit = fitF >= 4 ? Math.floor(fitF) : Math.max(0.5, Math.floor(fitF * 8) / 8);
+      var t = fit;
+      if (ui.view === 'close') {
+        // Close-up tile, kept small enough that the full-field layer stays within LAYER_MAX_PIXELS at 1x.
+        var maxT = Math.floor(Math.sqrt(LAYER_MAX_PIXELS / ((S.w + 2 * ORG) * (S.h + ORGY + ORG + 0.4))));
+        t = Math.max(fit, Math.min(maxT, Math.max(38, Math.round(fit * 1.7))));
+      }
       ui.close = ui.view === 'close';
       if (t !== ui.t || sized || !ui.layer) ui.layerDirty = true;
       ui.t = t;
@@ -1949,8 +1962,8 @@
 
     function draw(now, dt) {
       var g = ctx, dpr = ui.dpr, t = ui.t, pal = PAL[S.season], i, p;
-      // Swaying corn is drawn live over a corn-free ground layer; reduced motion uses one baked layer.
-      var sway = !ui.reduce;
+      // Bake corn once when zoomed too far out to see its sway, or when reduced motion is on.
+      var sway = !ui.reduce && t >= MOTION_MIN_T;
       if (ui.layerDirty || !ui.layer || ui.layer.withCorn === sway) {
         ui.layer = buildLayer(S, S.season, t, dpr, !sway); ui.layerDirty = false; ui.mm.dirty = true;
         ui.sprites = sway ? getSprites(S.season, t, dpr) : null;

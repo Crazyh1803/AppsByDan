@@ -120,7 +120,7 @@ Reference them with a `<picture>` block so browsers pick the smaller file.
 
 The playable game at `/hedge-and-harvest/` is a static copy of the five runtime
 files from [Crazyh1803/HedgeandHarvest](https://github.com/Crazyh1803/HedgeandHarvest),
-commit `ff8b3adb4f52aced937332cabf912193463985e0`. To update it, copy `index.html`,
+commit `6b5dea5cf6063693e75a80d7d9a1d673418588a4`. To update it, copy `index.html`,
 `styles.css`, `game.js`, `audio.js`, and `favicon.svg` from a tested source revision
 into `hedge-and-harvest/`, then update this revision and publish both branches.
 The listing artwork is a screenshot of actual gameplay.
