@@ -14,7 +14,8 @@ This file is the day-to-day reference.
 | Page | Contents |
 |---|---|
 | `index.html` | Hero, everything that's shipped, everything in progress |
-| `apps.html` | True Shuffle, Manual Bridge, Pantry Logic |
+| `apps.html` | 2642 Easy, True Shuffle, Manual Bridge, Pantry Logic |
+| `2642-easy.html` | DD Form 2642 claim preparation: live web app, source, privacy policy, Google Play coming soon |
 | `games.html` | Hedge and Harvest, Gaga Pit Showdown |
 | `printing.html` | 3D printing placeholder |
 | `about.html` | About Me, the tips model, the note on how the apps get made |
@@ -139,3 +140,12 @@ submissions are not open. No fabricated player submissions are included.
 
 See [the Drive gallery setup](docs/harvest-gallery-drive.md) for the private
 folders, Google Form setup, and review/publication workflow.
+
+### 2642 Easy
+
+`2642-easy.html` is linked from Home and Apps. The web version is available at
+https://crazyh1803.github.io/Easy2642/; Google Play is coming soon, with no store
+URL yet. Replace the availability text when the listing is published.
+`assets/img/easy2642-icon.{webp,jpg}` are optimized derivatives of
+`docs/store/icon-512.png` from Crazyh1803/Easy2642 at
+`fe0f0114f8d3328619b82d7438883ab9a9c77db6`.

@@ -586,3 +586,14 @@ main { flex: 1 0 auto; }
 .harvest-rules p, .harvest-rules ul { margin: 16px 0; color: var(--text-muted); }
 .harvest-rules ul { padding-left: 24px; }
 .harvest-rules li { margin: 10px 0; }
+
+/* 2642 Easy uses the published app icon, shown uncropped. */
+.easy2642-feature { max-width: none; }
+.easy2642-art { display: grid; place-items: center; padding: 28px; background: radial-gradient(ellipse at top, #315342, #18281f); }
+.easy2642-art img { display: block; width: 100%; max-width: 240px; height: auto; border-radius: 22%; }
+.easy2642-availability { margin-top: 20px; color: var(--text-muted); font-size: .95rem; }
+.easy2642-availability span { padding: 0 6px; }
+@media (min-width: 760px) {
+    .easy2642-feature { display: grid; grid-template-columns: 300px 1fr; align-items: center; }
+    .easy2642-art { align-self: stretch; }
+}
